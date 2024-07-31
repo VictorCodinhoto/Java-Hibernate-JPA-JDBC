@@ -19,8 +19,10 @@ public class Student {
 
     @Column(name = "email")
     private String email;
+    public Student(){
 
-   public Student(String firstName, String lastName, String email){
+    }
+    public Student(String firstName, String lastName, String email){
        this.firstName = firstName;
        this.lastName = lastName;
        this.email = email;
