@@ -22,11 +22,64 @@ public class CruddemoApplication {
 	public CommandLineRunner commandLineRunner (StudentDAO studentDAO){
 		return runner -> {
 		   //createStudent(studentDAO);
-		   createMultipleStudents(studentDAO);
-		   //readStudent(studentDAO);
-		   readAllStudent(studentDAO);
+//		   createMultipleStudents(studentDAO);
+//		   //readStudent(studentDAO);
+//		   readAllStudent(studentDAO);
+		   queryStudentsByLastName(studentDAO);
+		   updateStudent(studentDAO);
+		   deleteStudent(studentDAO);
+		   deletE(studentDAO);
 		};
 
+	}
+
+	private void deletE(StudentDAO studentDAO) {
+		studentDAO.delAll();
+		System.out.println("All deleted.");
+	}
+
+	private void deleteStudent(StudentDAO studentDAO) {
+		Scanner sc = new Scanner(System.in);
+		int id;
+		System.out.println("Digite o id que está buscando: ");
+		id = sc.nextInt();
+		studentDAO.delete(id);
+	}
+
+	private void updateStudent(StudentDAO studentDAO) {
+		Scanner sc = new Scanner(System.in);
+		int studentID;
+		String newFirstName;
+		System.out.println("Digite o ID: ");
+		studentID = sc.nextInt();
+
+		Student theStudent  =  studentDAO.findById(studentID);
+
+
+		System.out.println("Digite o novo firstname: ");
+		newFirstName = sc.nextLine();
+		theStudent.setFirstName(newFirstName);
+
+		studentDAO.update(theStudent);
+
+		sc.close();
+
+
+
+
+
+
+	}
+
+	private void queryStudentsByLastName(StudentDAO studentDAO) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Escreva o ultimo nome: ");
+		String lastname = sc.nextLine();
+		 List<Student> theStudents =  studentDAO.findByLastName(lastname);
+		for(Student tempStudent : theStudents){
+			System.out.println(tempStudent);
+		}
+		sc.close();
 	}
 
 	private void readAllStudent(StudentDAO studentDAO) {

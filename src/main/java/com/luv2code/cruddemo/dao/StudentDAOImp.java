@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public class StudentDAOImp implements StudentDAO{
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
     @Autowired
     public StudentDAOImp (EntityManager TheEntityManager){
         entityManager = TheEntityManager;
@@ -33,5 +33,34 @@ public class StudentDAOImp implements StudentDAO{
         TypedQuery<Student> theQuery = entityManager.createQuery("FROM Student",Student.class);
 
         return theQuery.getResultList();
+    }
+
+
+    @Override
+    public List<Student> findByLastName(String lastName) {
+       TypedQuery<Student> theQuery = entityManager.createQuery("FROM Student where last_name=: theData", Student.class);
+       theQuery.setParameter("theData", lastName);
+       return theQuery.getResultList();
+
+
+    }
+
+    @Override
+    @Transactional
+    public void update(Student theStudent) {
+        entityManager.merge(theStudent);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Integer id) {
+        Student theStudent = entityManager.find(Student.class,id);
+        entityManager.remove(theStudent);
+    }
+
+    @Override   @Transactional
+    public  int  delAll(){
+        int numRowsDeleted = entityManager.createQuery("DELETE FROM Student").executeUpdate();
+        return numRowsDeleted;
     }
 }
