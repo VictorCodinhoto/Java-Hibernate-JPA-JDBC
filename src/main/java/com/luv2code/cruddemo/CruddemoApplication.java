@@ -25,10 +25,10 @@ public class CruddemoApplication {
 //		   createMultipleStudents(studentDAO);
 //		   //readStudent(studentDAO);
 //		   readAllStudent(studentDAO);
-		   queryStudentsByLastName(studentDAO);
-		   updateStudent(studentDAO);
-		   deleteStudent(studentDAO);
-		   deletE(studentDAO);
+//		   queryStudentsByLastName(studentDAO);
+//		   updateStudent(studentDAO);
+//		   deleteStudent(studentDAO);
+//		   deletE(studentDAO);
 		};
 
 	}
