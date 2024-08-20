@@ -1,12 +1,11 @@
 package com.luv2code.cruddemo.rest;
 
+import com.luv2code.cruddemo.dao.EmployDAO;
+import com.luv2code.cruddemo.entity.Employee;
 import com.luv2code.cruddemo.entity.Student;
 
 import jakarta.annotation.PostConstruct;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,12 +15,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class DemoRestController {
-    @GetMapping("/HelloWorld")
+    //@GetMapping("/HelloWorld")
     public String helloWorld(){
         return "Hello World!";
     }
 
-   
+
     private List<Student> theStudents;
 
     @PostConstruct
@@ -45,5 +44,13 @@ public class DemoRestController {
         }
         return theStudents.get(studentId);
     }
+    private EmployDAO employDAO;
+    public DemoRestController(EmployDAO employDAO){
+        this.employDAO = employDAO;
+    }
 
+    @GetMapping("employees")
+    public  List<Employee> findAll(){
+        return employDAO.findall();
+    }
 }
