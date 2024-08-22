@@ -1,12 +1,11 @@
 package com.luv2code.cruddemo.rest;
 
-import com.luv2code.cruddemo.dao.EmployDAO;
+import com.luv2code.cruddemo.Service.EmployeeService;
 import com.luv2code.cruddemo.entity.Employee;
-import com.luv2code.cruddemo.entity.Student;
 
-import jakarta.annotation.PostConstruct;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,41 +15,56 @@ import java.util.List;
 @RequestMapping("/api")
 public class DemoRestController {
     //@GetMapping("/HelloWorld")
-    public String helloWorld(){
-        return "Hello World!";
+//    public String helloWorld(){
+//        return "Hello World!";
+//    }
+//
+//
+//    private List<Student> theStudents;
+//
+//    @PostConstruct
+//    public void loadData(){
+//        theStudents = new java.util.ArrayList<>(List.of());
+//        theStudents.add(new Student("Victor","Batista","vitorcodinhoto@outlook.com"));
+//        theStudents.add(new Student("Victor","Codinhoto","vitorcodinhoto@g.com"));
+//
+//    }
+//
+//
+//    @GetMapping("/Students")
+//    public List<Student> getStudents(){
+//        return theStudents;
+//    }
+//
+//    @GetMapping("Student/{studentId}")
+//    public Student getStudent(int studentId){
+//        if(studentId >= theStudents.size() || studentId < 0){
+//            throw new StudentNotFoundException("Student not found " + studentId);
+//        }
+//        return theStudents.get(studentId);
+//    }
+//    private EmployDAO employDAO;
+//    public DemoRestController(EmployDAO employDAO){
+//        this.employDAO = employDAO;
+//    }
+//
+    private  EmployeeService employeeService;
+    @Autowired
+    public void EmployeeRestController(EmployeeService theEmployeeService){
+        employeeService = theEmployeeService;
     }
-
-
-    private List<Student> theStudents;
-
-    @PostConstruct
-    public void loadData(){
-        theStudents = new java.util.ArrayList<>(List.of());
-        theStudents.add(new Student("Victor","Batista","vitorcodinhoto@outlook.com"));
-        theStudents.add(new Student("Victor","Codinhoto","vitorcodinhoto@g.com"));
-
-    }
-
-
-    @GetMapping("/Students")
-    public List<Student> getStudents(){
-        return theStudents;
-    }
-
-    @GetMapping("Student/{studentId}")
-    public Student getStudent(int studentId){
-        if(studentId >= theStudents.size() || studentId < 0){
-            throw new StudentNotFoundException("Student not found " + studentId);
-        }
-        return theStudents.get(studentId);
-    }
-    private EmployDAO employDAO;
-    public DemoRestController(EmployDAO employDAO){
-        this.employDAO = employDAO;
-    }
-
-    @GetMapping("employees")
+    @GetMapping("/employees")
     public  List<Employee> findAll(){
-        return employDAO.findall();
+        return employeeService.findAll();
     }
+    @GetMapping("/employees/{Id}")
+    public Employee getEmployee(@PathVariable() int Id){
+        Employee employee = employeeService.findEmployeeById(Id);
+        if(employee == null){
+            throw new RuntimeException("Employ Id Not Found " + Id);
+        }
+        return employee;
+
+    }
+
 }
