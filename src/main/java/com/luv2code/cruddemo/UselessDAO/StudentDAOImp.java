@@ -1,4 +1,4 @@
-package com.luv2code.cruddemo.dao;
+package com.luv2code.cruddemo.UselessDAO;
 
 import com.luv2code.cruddemo.entity.Student;
 import jakarta.persistence.EntityManager;
