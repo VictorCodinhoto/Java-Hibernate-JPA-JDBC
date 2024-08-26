@@ -4,12 +4,12 @@ import com.luv2code.cruddemo.Service.EmployeeService;
 import com.luv2code.cruddemo.entity.Employee;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
+
+import static java.util.Objects.*;
 
 @RestController
 @RequestMapping("/api")
@@ -65,6 +65,12 @@ public class DemoRestController {
         }
         return employee;
 
+    }
+    @PostMapping("/employees")
+    //Sempre set o id para 0 para ele não se transformar em um update, mas sim em um new, o JDBC IRÁ TRATAR ISSO
+    public Employee saveEmployee(@RequestBody Employee employee){
+        employee.setId(0);
+        return employeeService.saveEmployee(employee);
     }
 
 }
