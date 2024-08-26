@@ -72,5 +72,20 @@ public class DemoRestController {
         employee.setId(0);
         return employeeService.saveEmployee(employee);
     }
+    @PutMapping("/employees")
+    // Quando não set o id para 0 ele atualiza um existente
+    public Employee updateEmployee(@RequestBody Employee theEmployee){
+        return employeeService.saveEmployee(theEmployee);
 
+
+    }
+    @DeleteMapping("employees/{Id}")
+    public String deleteEmployee(@PathVariable  Integer Id){
+        Employee employee =  employeeService.findEmployeeById(Id);
+        if(employee == null){
+            throw new RuntimeException("Id not found");
+        }
+        employeeService.deleteEmployeeById(employee.getId());
+        return "Employ " + employee.getId() + " Deleted";
+    }
 }
