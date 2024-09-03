@@ -12,7 +12,6 @@ import java.util.Objects;
 import static java.util.Objects.*;
 
 @RestController
-@RequestMapping("/api")
 public class DemoRestController {
     //@GetMapping("/HelloWorld")
 //    public String helloWorld(){
