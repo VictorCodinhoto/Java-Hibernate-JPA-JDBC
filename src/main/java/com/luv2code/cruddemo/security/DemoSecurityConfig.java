@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -18,13 +19,13 @@ public class DemoSecurityConfig {
         UserDetails victor = User.builder()
                 .username("victor")
                 .password("{noop}codinhoto")
-                .roles("Employee","Manager","Administrator")
+                .roles("EMPLOYEE","MANAGER","ADMINISTRATOR")
                 .build();
 
         UserDetails mary = User.builder()
                 .username("Mary")
                 .password("{noop}Ane123")
-                .roles("Employee")
+                .roles("EMPLOYEE")
                 .build();
 
         return  new InMemoryUserDetailsManager(victor,mary);
@@ -40,7 +41,7 @@ public class DemoSecurityConfig {
                         .requestMatchers(HttpMethod.PUT,"/api/employees/**").hasRole("MANAGER"));
         http.httpBasic(Customizer.withDefaults());
 
-        http.csrf(csrf -> csrf.disable());
+        http.csrf(AbstractHttpConfigurer::disable);
         return http.build();
     }
 }
